@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="container text-center py-3">
+
+        <h1 class="text-primary font-noto">FAKE-NEWS DETECTOR</h1>
+        <small class="text-dark font-noto">Analyze suspicious News articles to detect if they are Fake, Using <br>Reccurent
+            Neural
+            Networks (LSTM and Bi-LSTM)</small>
+        <br>
+        <div class="mx-auto ">
+            <div class="">
+                {% if msg %}
+                    <div class="alert alert-success" role="alert">
+                        {{msg}}
+                    </div>
+                {% endif %}
+                <br>
+                <div class="container w-75" id="tabs">
+                    <nav>
+                        <div class="nav nav-tabs justify-content-center text-center" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active col-4" id="nav-home-tab" data-toggle="tab"
+                               href="#nav-home"
+                               role="tab" aria-controls="nav-home" aria-selected="true">TEXT</a>
+                            <a class="nav-item nav-link col-4" id="nav-profile-tab" data-toggle="tab"
+                               href="#nav-profile"
+                               role="tab" aria-controls="nav-profile" aria-selected="false">URL</a>
+                            <a class="nav-item nav-link col-4" id="nav-contact-tab" data-toggle="tab"
+                               href="#nav-contact"
+                               role="tab" aria-controls="nav-contact" aria-selected="false">SUBMIT NEW DATA</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content justify-content-center text-center" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <br>
+                            <div class="row justify-content-center text-center"><br><br>
+                                <img src="{% static 'img/thumbprint.png' %}" alt="" height="80" class="py-2"></div>
+                            <br>
+                            <div class="row text-center justify-content-center"><small class="text-dark font-noto">
+                                Check if a news article is fake or real by <br>filling the form bellow.
+                            </small>
+                                <br><br>
+                            </div>
+                            <div class="row justify-content-center text-center w-75 mx-auto">
+                                <div class="input-group mb-3">
+                                    <input style="font-size: 0.9em" type="text" class="form-control" aria-label=""
+                                           placeholder="Acticle's title" id="title">
+                                </div>
+
+                                <div class="input-group">
+                                    <textarea style="font-size: 0.9em" class="form-control" aria-label="With textarea"
+                                              rows="8" placeholder="Article's content" id="article"></textarea>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="row justify-content-center text-center w-75 mx-auto py-4">
+
+                                <button type="button" class="btn btn-sm w-25  btn-outline-primary" id="checkArticle">
+                                    Submit
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <br>
+                            <div class="row justify-content-center text-center"><br><br>
+                                <img src="{% static 'img/website-scan.svg' %}" alt="" height="80" class="py-2"></div>
+                            <br>
+                            <div class="row justify-content-center text-center w-75 mx-auto">
+                                <!-- Actual search box -->
+                                <div class="form-group has-search px-5 w-100" style="margin-left: 29px;">
+                                    <span class="fa fa-search form-control-feedback"></span>
+                                    <input type="text" class="form-control" id="url" name="url"
+                                           placeholder="Enter an acticle URL to check it" style="font-size: 0.85em">
+                                </div>
+                                <div class="row justify-content-center text-center w-75 mx-auto py-4">
+
+                                    <button type="button" class="btn btn-sm w-25  btn-outline-primary" id="checkUrl"
+                                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing">Check
+                                        URL
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <br>
+                            <div class="row justify-content-center text-center"><br><br>
+                                <img src="{% static 'img/thumbprint.png' %}" alt="" height="80" class="py-2"></div>
+                            <br>
+                            <div class="row text-center justify-content-center"><small class="text-dark font-noto">
+                                Help us to collect more data and improve our system by <br>filling the form bellow.
+                            </small>
+                                <br><br>
+                            </div>
+                            <form action="{% url 'home' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row justify-content-center text-center w-75 mx-auto">
+                                    <div class="input-group mb-3">
+                                        <input style="font-size: 0.9em" type="text" class="form-control" aria-label=""
+                                               placeholder="Acticle's title" name="title">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input style="font-size: 0.9em" type="text" class="form-control" aria-label=""
+                                               placeholder="Acticle's Author" name="author">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="inputGroupSelect01">Label</label>
+                                            </div>
+                                            <select class="custom-select" id="inputGroupSelect01" name="label">
+                                                <option selected value="1">Fake News</option>
+                                                <option value="0">Real News</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                    <textarea style="font-size: 0.9em" class="form-control" aria-label="With textarea"
+                                              rows="8" placeholder="Article's content" name="text"></textarea>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="row justify-content-center text-center w-75 mx-auto py-4">
+
+                                    <button type="sumbit" class="btn btn-sm w-25  btn-outline-primary"
+                                            id="checkArticle">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="container w-75" id="results">
+                    <br><br><br>
+                    <div class="gauge">
+                        <ul class="meter">
+                            <li class="low"></li>
+                            <li class="normal"></li>
+                            <li class="high"></li>
+                        </ul>
+
+                        <div class="dial">
+                            <div class="inner">
+                                <div class="arrow">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="value">
+                            0%
+                        </div>
+                        <div class="row justify-content-center text-center">
+                            <span class="" id="msg" style="z-index:999;margin-top: -240px;font-size: 24px"></span><br>
+                        </div>
+                        <div class="row justify-content-center text-center">
+                            <a href="#checkother" style="z-index:999;margin-top: -240px;font-size: 20px"
+                               onclick="showtabs()"> Check another article</a>
+
+                        </div>
+                    </div>
+
+                </div>
+                <br><br>
+
+
+                <div class="container py-4">
+
+
+                </div>
+                <br><br>
+                <div class="container py-4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $('#results').hide()
+        })
+    </script>
+
+    <script>
+        $('#checkArticle').on('click', function () {
+            var btn = $(this);
+            btn.html('<i class="fa fa-spinner fa-spin"> </i> processing');
+            t = $('#title').val()
+            a = $('#article').val()
+            data = {
+                article: a,
+                title: t
+            }
+            $.ajax({
+                type: 'GET',
+                url: '{% url "check-text" %}',
+                data: data,
+                success: function (data) {
+                    var p = data['percent']
+                    var msg = data['msg']
+                    btn.html('submit');
+                    $('#tabs').hide()
+                    var clr;
+                    if (Math.fround(parseFloat(p)) < Math.fround(0.5))
+                        clr = "text-success"
+                    if (Math.fround(parseFloat(p)) > Math.fround(0.75))
+                        clr = "text-danger"
+                    else if (Math.fround(parseFloat(p)) > Math.fround(0.5))
+                        clr = "text-warning"
+                    $('#msg').removeClass("text-warning")
+                    $('#msg').removeClass("text-danger")
+                    $('#msg').removeClass("text-success")
+                    $('#msg').addClass(clr)
+                    $('#msg').text(msg)
+
+                    $('#results').show()
+                    rotateDial(p)
+
+
+                }
+            })
+        })
+        $('#checkUrl').on('click', function () {
+            var btn = $(this);
+            btn.html('<i class="fa fa-spinner fa-spin"> </i> processing');
+            url = $('#url').val()
+            data = {
+                url: url
+            }
+            $.ajax({
+                type: 'GET',
+                url: '{% url "check-url" %}',
+                data: data,
+                success: function (data) {
+                    var p = data['percent']
+                    var msg = data['msg']
+                    btn.html('Check URL');
+                    $('#tabs').hide()
+                    if (Math.fround(parseFloat(p)) < Math.fround(0.5))
+                        clr = "text-success"
+                    if (Math.fround(parseFloat(p)) > Math.fround(0.75))
+                        clr = "text-danger"
+                    else if (Math.fround(parseFloat(p)) > Math.fround(0.5))
+                        clr = "text-warning"
+
+                    $('#msg').removeClass("text-warning")
+                    $('#msg').removeClass("text-danger")
+                    $('#msg').removeClass("text-success")
+                    $('#msg').addClass(clr)
+                    $('#msg').text(msg)
+
+                    $('#results').show()
+                    rotateDial(p)
+
+
+                }
+            })
+        })
+
+        function showtabs() {
+            $('#results').hide()
+            $('#tabs').show()
+        }
+
+        function rotateDial(data) {
+            var dial = $(".dial .inner");
+            var gauge_value = $(".gauge .value");
+            var deg = 0;
+
+            deg = (data * 180);
+
+            gauge_value.html(data * 100 + "%");
+
+            dial.css({'transform': 'rotate(' + deg + 'deg)'});
+
+        }
+    </script>
+    <script>
+
+    </script>
+{% endblock %}

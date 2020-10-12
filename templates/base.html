@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FakeNews Detector{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fontawesome/css/all.css' %}">
+
+
+</head>
+<body>
+
+<section class="py-5 ">
+
+    {% block content %}
+    {% endblock %}
+</section>
+
+<script src="{% static 'assets/js/jquery.min.js' %}?h=83e266cb1712b47c265f77a8f9e18451"></script>
+<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}?h=63715b63ee49d5fe4844c2ecae071373"></script>
+
+
+<script></script>
+
+{% block js %}
+{% endblock %}
+
+</body>
+</html>

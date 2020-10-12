@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+body {
+    font-family: "Noto Sans", monospace;
+}
+
+.shadows {
+
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+}
+
+.cards:hover {
+    border: 1px #5cb138 solid;
+}
+
+.font-noto {
+    font-family: "Noto Sans";
+}
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.nav-tabs, .nav-tabs .nav-link {
+    border: none;
+    color: #777777;
+    font-family: "Noto Sans";
+    font-weight: bold;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-link:hover {
+    color: #007bff;
+    border-bottom: 4px solid #007bff;
+}
+
+.dial {
+    background-color: #FFF;
+    overflow: hidden;
+}
+
+.gauge {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    top: 30px;
+    left: 50%;
+    margin-left: -250px;
+    border-radius: 100%;
+    transform-origin: 50% 50%;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -webkit-transform: rotate(0deg);
+
+}
+
+.meter {
+    margin: 0;
+    padding: 0;
+}
+
+.meter > li {
+    width: 250px;
+    height: 250px;
+    list-style-type: none;
+    position: absolute;
+    border-top-left-radius: 250px;
+    border-top-right-radius: 0px;
+    transform-origin: 100% 100%;;
+    -webkit-transform-origin: 100% 100%;;
+    -ms-transform-origin: 100% 100%;;
+    transition-property: -webkit-transform;
+    pointer-events: none;
+}
+
+.meter .low {
+    transform: rotate(0deg); /* W3C */
+    -webkit-transform: rotate(0deg); /* Safari & Chrome */
+    -moz-transform: rotate(0deg); /* Firefox */
+    -ms-transform: rotate(0deg); /* Internet Explorer */
+    -o-transform: rotate(0deg); /* Opera */
+    z-index: 8;
+    background-color: #09B84F;
+}
+
+.meter .normal {
+    transform: rotate(47deg); /* W3C */
+    -webkit-transform: rotate(47deg); /* Safari & Chrome */
+    -moz-transform: rotate(47deg); /* Firefox */
+    -ms-transform: rotate(47deg); /* Internet Explorer */
+    -o-transform: rotate(47deg); /* Opera */
+    z-index: 7;
+    background-color: #FEE62A;
+}
+
+.meter .high {
+    transform: rotate(90deg); /* W3C */
+    -webkit-transform: rotate(90deg); /* Safari & Chrome */
+    -moz-transform: rotate(90deg); /* Firefox */
+    -ms-transform: rotate(90deg); /* Internet Explorer */
+    -o-transform: rotate(90deg); /* Opera */
+    z-index: 6;
+    background-color: #FA0E1C;
+}
+
+
+.dial,
+.dial .inner {
+    width: 470px;
+    height: 470px;
+    position: relative;
+    top: 10px;
+    left: 5px;
+    border-radius: 100%;
+    border-color: purple;
+    z-index: 10;
+    transition-property: -webkit-transform;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+    transform: rotate(0deg); /* W3C */
+    -webkit-transform: rotate(0deg); /* Safari & Chrome */
+    -moz-transform: rotate(0deg); /* Firefox */
+    -ms-transform: rotate(0deg); /* Internet Explorer */
+    -o-transform: rotate(0deg); /* Opera */
+}
+
+.dial .arrow {
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 214px;
+    left: 24px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 32px solid #000;
+    -webkit-transform: rotate(-88deg); /* Safari & Chrome */
+    -moz-transform: rotate(88deg); /* Firefox */
+    -ms-transform: rotate(88deg); /* Internet Explorer */
+    -o-transform: rotate(88deg); /* Opera */
+
+}
+
+.gauge .value {
+    font-family: 'Josefin Slab', serif;
+    font-size: 50px;
+    color: #000;
+    position: absolute;
+    top: 142px;
+    left: 45%;
+    z-index: 11;
+}
